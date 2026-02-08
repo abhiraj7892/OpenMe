@@ -6,18 +6,19 @@
 <title>For Bubbu ❤️</title>
 
 <style>
+/* Base */
 body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: white;
+    background: rgb(255, 255, 255); /* PURE WHITE */
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Center card */
+/* Main card */
 .container {
     background: white;
     padding: 40px 50px;
@@ -29,6 +30,7 @@ body {
 
 h1 {
     color: #ff2e63;
+    margin-bottom: 10px;
 }
 
 h2 {
@@ -37,7 +39,7 @@ h2 {
 }
 
 button {
-    padding: 16px 32px;
+    padding: 16px 34px;
     border: none;
     border-radius: 30px;
     font-size: 1.1rem;
@@ -56,7 +58,7 @@ button:hover {
 .popup {
     position: fixed;
     inset: 0;
-    background: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.95);
     display: none;
     justify-content: center;
     align-items: center;
@@ -98,7 +100,7 @@ button:hover {
     }
 }
 
-/* Love text styling */
+/* Love text */
 .love-text {
     color: #ff2e63;
     font-weight: 600;
@@ -155,18 +157,19 @@ function createFall() {
     setTimeout(() => el.remove(), 13000);
 }
 
-// Continuous rain
+/* Continuous rain */
 setInterval(createFall, 220);
 
 /* YES button */
 document.getElementById("yes").onclick = () => {
     document.getElementById("popup").style.display = "flex";
 
-    // Extra love burst
+    // Love burst
     for (let i = 0; i < 30; i++) {
         setTimeout(createFall, i * 80);
     }
 
+    // Mobile vibration
     if (navigator.vibrate) {
         navigator.vibrate([200,100,200,100,400]);
     }
