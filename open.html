@@ -3,263 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine 💖</title>
+<title>For Bubbu ❤️</title>
 
 <style>
-* { box-sizing: border-box; }
-
 body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
+    background: white;
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ff0844, #ffb199, #ff4ecd);
-}
-
-/* Glitter border */
-.glitter {
-    position: fixed;
-    inset: 10px;
-    border-radius: 30px;
-    border: 5px solid transparent;
-    background:
-      linear-gradient(#0000, #0000) padding-box,
-      linear-gradient(120deg, #ff004c, #ffe600, #00ffd5, #ff004c) border-box;
-    animation: glow 2.5s infinite linear;
-    pointer-events: none;
-}
-@keyframes glow {
-    0% { filter: drop-shadow(0 0 10px #ff004c); }
-    50% { filter: drop-shadow(0 0 30px #00ffd5); }
-    100% { filter: drop-shadow(0 0 10px #ff004c); }
-}
-
-/* Layout */
-.container {
-    position: relative;
-    z-index: 3;
-    height: 100%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+/* Center card */
+.container {
+    background: white;
+    padding: 40px 50px;
+    border-radius: 24px;
     text-align: center;
-    color: white;
+    box-shadow: 0 20px 40px rgba(255, 0, 80, 0.25);
+    z-index: 10;
 }
 
 h1 {
-    font-size: 2.5em;
+    color: #ff2e63;
+}
+
+h2 {
+    color: #ff5c8a;
     margin-bottom: 30px;
-    text-shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
-/* Buttons */
-.buttons { position: relative; }
 button {
-    padding: 16px 30px;
-    margin: 12px;
-    border-radius: 40px;
+    padding: 16px 32px;
     border: none;
-    font-size: 1.1em;
+    border-radius: 30px;
+    font-size: 1.1rem;
     cursor: pointer;
-}
-.yes {
-    background: linear-gradient(135deg, #ff0055, #ff8800);
+    background: #ff2e63;
     color: white;
+    box-shadow: 0 8px 20px rgba(255,46,99,0.4);
+    transition: transform 0.3s ease;
 }
 
-/* Dialog */
-.dialog {
-    display: none;
+button:hover {
+    transform: scale(1.08);
+}
+
+/* Popup */
+.popup {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.7);
-    z-index: 6;
+    background: rgba(255,255,255,0.9);
+    display: none;
     justify-content: center;
     align-items: center;
+    z-index: 20;
 }
-.dialog-box {
+
+.popup-content {
     background: white;
-    padding: 25px;
+    padding: 35px 40px;
     border-radius: 22px;
-    max-width: 420px;
-    animation: pop 0.5s ease;
     text-align: center;
+    box-shadow: 0 25px 45px rgba(255, 0, 80, 0.3);
+    animation: pop 0.6s ease;
 }
+
 @keyframes pop {
-    from { transform: scale(0.5); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-.dialog-box p {
-    color: #333;
-    font-size: 1.05em;
+    from { transform: scale(0.7); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
 }
 
-/* === Two Hearts Merging === */
-.hearts-wrap {
-    position: relative;
-    height: 120px;
-    margin: 10px 0 15px;
-}
-.heart {
-    position: absolute;
-    font-size: 70px;
-    top: 20px;
-}
-.heart.left {
-    left: -20px;
-    animation: moveLeft 1.2s forwards ease-in-out;
-}
-.heart.right {
-    right: -20px;
-    animation: moveRight 1.2s forwards ease-in-out;
-}
-@keyframes moveLeft {
-    to { left: 50%; transform: translateX(-50%) scale(0.8); opacity: 0; }
-}
-@keyframes moveRight {
-    to { right: 50%; transform: translateX(50%) scale(0.8); opacity: 0; }
-}
-
-.merged {
-    font-size: 90px;
-    opacity: 0;
-    animation: appearPulse 0.6s 1.2s forwards, pulse 1.2s 1.8s infinite;
-    filter: drop-shadow(0 0 18px #ff3366);
-}
-@keyframes appearPulse {
-    to { opacity: 1; }
-}
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-/* Floating hearts & balloons */
-.float {
-    position: absolute;
-    animation: floatUp linear infinite;
-}
-@keyframes floatUp {
-    from { transform: translateY(110vh); opacity: 0; }
-    to { transform: translateY(-15vh); opacity: 1; }
-}
-
-/* Fireworks */
-canvas {
+/* Falling elements */
+.fall {
     position: fixed;
-    inset: 0;
-    z-index: 5;
+    top: -60px;
+    animation: fall linear forwards;
     pointer-events: none;
-}
-</style>
-</head>
-
-<body>
-
-<div class="glitter"></div>
-
-<div class="container">
-    <h1>Will you be my Valentine,<br><b>Bubbu</b>? 💘</h1>
-    <div class="buttons">
-        <button class="yes" onclick="accept()">Hell Yeah 😍</button>
-    </div>
-</div>
-
-<!-- Dialog -->
-<div class="dialog" id="dialog">
-    <div class="dialog-box">
-
-        <!-- Two hearts merging -->
-        <div class="hearts-wrap">
-            <div class="heart left">❤️</div>
-            <div class="heart right">❤️</div>
-            <div class="merged">💖</div>
-        </div>
-
-        <p>
-            💖 I knew that you love me Bubbu 💖<br><br>
-            I love you soooooooo much ❤️<br><br>
-            Chal chalte h kahin khopche m,<br>
-            and chumma chaati krte h 😄
-        </p>
-
-        <button class="yes" onclick="closeDialog()">Forever ❤️</button>
-    </div>
-</div>
-
-<canvas id="fireworks"></canvas>
-
-<script>
-/* Floating hearts & balloons */
-setInterval(() => {
-    const el = document.createElement("div");
-    el.className = "float";
-    el.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈";
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.fontSize = (18 + Math.random() * 26) + "px";
-    el.style.animationDuration = (5 + Math.random() * 4) + "s";
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 9000);
-}, 220);
-
-
-/* Fireworks */
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-function fireworkBurst(x, y) {
-    for (let i = 0; i < 150; i++) {
-        ctx.beginPath();
-        ctx.arc(
-            x + Math.random()*200-100,
-            y + Math.random()*200-100,
-            2, 0, Math.PI*2
-        );
-        ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
-        ctx.fill();
-    }
-    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 900);
-}
-setInterval(() => {
-    fireworkBurst(Math.random()*innerWidth, Math.random()*innerHeight/2);
-}, 1800);
-
-/* Accept */
-function accept() {
-    fireworkBurst(innerWidth/2, innerHeight/2);
-    document.getElementById("dialog").style.display = "flex";
-}
-
-/* Close */
-function closeDialog() {
-    document.getElementById("dialog").style.display = "none";
-}
-</script>
-
-</body>
-</html>
-
-<style>
-.love-rain {
-    position: fixed;
-    top: -40px;
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
+    z-index: 1;
     white-space: nowrap;
-    text-shadow: 0 0 8px #ff3366, 0 0 14px #ff6699;
-    animation: rain linear forwards;
-    z-index: 4;
-    pointer-events: none;
 }
 
-@keyframes rain {
+@keyframes fall {
     from {
-        transform: translateY(-40px);
+        transform: translateY(-60px);
         opacity: 0;
     }
     to {
@@ -267,111 +97,81 @@ function closeDialog() {
         opacity: 1;
     }
 }
+
+/* Love text styling */
+.love-text {
+    color: #ff2e63;
+    font-weight: 600;
+    text-shadow: 0 0 6px rgba(255, 46, 99, 0.6);
+}
 </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hey Bubbu ❤️</h1>
+    <h2>Will you be my Valentine?</h2>
+    <button id="yes">Hell Yeah 😍</button>
+</div>
+
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>❤️❤️❤️</h2>
+        <p>
+            I knew that you love me Bubbu 🥹❤️<br><br>
+            I love you soooooooo much 😘<br><br>
+            Chal chalte h kahin khopche m,<br>
+            and chumma chaati krte h 😄💋
+        </p>
+    </div>
+</div>
 
 <script>
-function loveRain() {
-    const text = document.createElement("div");
-    text.className = "love-rain";
-    text.innerHTML = 'I love you ❤️';
-    text.style.left = Math.random() * 100 + "vw";
-    text.style.fontSize = (14 + Math.random() * 14) + "px";
-    text.style.animationDuration = (4 + Math.random() * 4) + "s";
-    document.body.appendChild(text);
-
-    setTimeout(() => text.remove(), 9000);
-}
-
-// Continuous rain
-setInterval(loveRain, 180);
-
-// Extra burst when YES clicked
-function accept() {
-    for (let i = 0; i < 30; i++) {
-        setTimeout(loveRain, i * 60);
-    }
-    document.getElementById("dialog").style.display = "flex";
-}
-</script>
-
-<script>
-function createFloating() {
+function createFall() {
     const el = document.createElement("div");
-    el.classList.add("float");
+    el.className = "fall";
 
-    const isHeart = Math.random() > 0.4;
+    const type = Math.random();
 
-    if (isHeart) {
-        el.classList.add("heart");
+    if (type < 0.4) {
         el.innerHTML = "❤️";
-        el.style.fontSize = (18 + Math.random() * 22) + "px";
-    } else {
-        el.classList.add("balloon");
-        el.innerHTML = ["🎈","🎈","🎈","💗"][Math.floor(Math.random()*4)];
-        el.style.fontSize = (30 + Math.random() * 30) + "px";
+        el.style.fontSize = (18 + Math.random() * 24) + "px";
+    } 
+    else if (type < 0.7) {
+        el.innerHTML = "🎈";
+        el.style.fontSize = (26 + Math.random() * 34) + "px";
+    } 
+    else {
+        el.innerHTML = "I love you ❤️";
+        el.classList.add("love-text");
+        el.style.fontSize = (14 + Math.random() * 14) + "px";
     }
 
     el.style.left = Math.random() * 100 + "vw";
-    el.style.animationDuration = (6 + Math.random() * 6) + "s";
+    el.style.animationDuration = (5 + Math.random() * 6) + "s";
 
     document.body.appendChild(el);
-
-    setTimeout(() => el.remove(), 14000);
+    setTimeout(() => el.remove(), 13000);
 }
 
-// Continuous floating
-setInterval(createFloating, 350);
+// Continuous rain
+setInterval(createFall, 220);
+
+/* YES button */
+document.getElementById("yes").onclick = () => {
+    document.getElementById("popup").style.display = "flex";
+
+    // Extra love burst
+    for (let i = 0; i < 30; i++) {
+        setTimeout(createFall, i * 80);
+    }
+
+    if (navigator.vibrate) {
+        navigator.vibrate([200,100,200,100,400]);
+    }
+};
 </script>
 
-<style>
-/* Romantic animated background */
-body {
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(120deg, #ff9aa2, #ffb7b2, #ffd1dc);
-    animation: bgShift 12s ease-in-out infinite alternate;
-    font-family: 'Poppins', sans-serif;
-}
-
-@keyframes bgShift {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(10deg); }
-}
-
-/* Floating elements */
-.float {
-    position: absolute;
-    bottom: -60px;
-    animation: floatUp linear infinite;
-    pointer-events: none;
-    opacity: 0.85;
-}
-
-@keyframes floatUp {
-    from {
-        transform: translateY(0) scale(1);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(-120vh) scale(1.2);
-        opacity: 1;
-    }
-}
-
-/* Hearts */
-.heart {
-    color: #ff2e63;
-    text-shadow: 0 0 10px #ff5c8a;
-}
-
-/* Balloons */
-.balloon {
-    font-size: 40px;
-    filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
-}
-</style>
-
-
-
-
+</body>
+</html>
