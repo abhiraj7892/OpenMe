@@ -1,153 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Bubbu ❤️</title>
 
 <style>
-/* ===== Background ===== */
-body {
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-  background: linear-gradient(180deg, #ffe6ea, #ffd1dc);
-  font-family: 'Poppins', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body{
+  margin:0;height:100vh;overflow:hidden;
+  background:linear-gradient(180deg,#ffe6ea,#ffd6e2);
+  font-family:Poppins,sans-serif;
+  display:flex;justify-content:center;align-items:center;
+}
+.container{
+  background:rgba(255,255,255,.95);
+  padding:42px 54px;border-radius:26px;
+  text-align:center;
+  box-shadow:0 25px 50px rgba(255,80,120,.3);
+  z-index:10;
+}
+h1{color:#ff2e63} h2{color:#ff6b8f;margin-bottom:28px}
+
+.buttons{position:relative;height:80px}
+button{
+  padding:16px 36px;border:none;border-radius:30px;
+  font-size:1.05rem;cursor:pointer;
+}
+#yes{background:#ff2e63;color:#fff}
+#no{
+  position:absolute;background:#ffd6e0;
+  color:#ff2e63;
 }
 
-/* ===== Card ===== */
-.container {
-  background: rgba(255,255,255,0.9);
-  padding: 42px 52px;
-  border-radius: 26px;
-  text-align: center;
-  box-shadow: 0 20px 45px rgba(255, 80, 120, 0.25);
-  z-index: 10;
+.popup{
+  position:fixed;inset:0;
+  background:rgba(255,255,255,.96);
+  display:none;justify-content:center;align-items:center;
+  z-index:30;
+}
+.popup-content{
+  background:white;padding:36px 44px;
+  border-radius:24px;text-align:center;
+  box-shadow:0 25px 50px rgba(255,80,120,.3);
+  animation:pop .6s ease;
+}
+@keyframes pop{
+  from{transform:scale(.7);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+#kissBtn{
+  margin-top:22px;background:#ff2e63;color:#fff;
+  padding:14px 34px;border-radius:30px;
 }
 
-h1 { color: #ff2e63; margin-bottom: 6px; }
-h2 { color: #ff6b8f; margin-bottom: 28px; }
+/* Falling */
+.fall{
+  position:fixed;top:-60px;
+  animation:fall linear forwards;
+  pointer-events:none;z-index:1;
+}
+@keyframes fall{
+  from{transform:translateY(-60px);opacity:0}
+  to{transform:translateY(110vh);opacity:1}
+}
+.love-text{color:#ff4f7a;font-weight:600}
 
-/* ===== Buttons ===== */
-.buttons {
-  position: relative;
-  display: flex;
-  gap: 22px;
-  justify-content: center;
+/* Kiss Scene */
+.kiss-overlay{
+  position:fixed;inset:0;
+  background:rgba(255,230,235,.98);
+  display:flex;justify-content:center;align-items:center;
+  z-index:100;
 }
+.lips-wrap{
+  position:relative;width:300px;height:150px;
+}
+.lip{
+  position:absolute;font-size:120px;
+}
+.left{left:0;animation:leftKiss 3s forwards}
+.right{right:0;animation:rightKiss 3s forwards}
 
-button {
-  padding: 16px 34px;
-  border: none;
-  border-radius: 30px;
-  font-size: 1.05rem;
-  cursor: pointer;
-  transition: transform 0.25s ease;
+@keyframes leftKiss{
+  to{transform:translateX(90px)}
 }
-
-#yes {
-  background: #ff2e63;
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(255,46,99,0.45);
-}
-#yes:hover { transform: scale(1.08); }
-
-#no {
-  position: absolute;
-  background: #ffd6e0;
-  color: #ff2e63;
-  box-shadow: 0 8px 18px rgba(255, 46, 99, 0.25);
-  z-index: 20;
-}
-
-/* ===== Popup ===== */
-.popup {
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.95);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 30;
-}
-.popup-content {
-  background: #fff;
-  padding: 36px 42px;
-  border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 25px 50px rgba(255, 80, 120, 0.3);
-  animation: pop 0.6s ease;
-  <br>
-<button id="kissBtn" style="
-  margin-top:20px;
-  background:#ff2e63;
-  color:white;
-  padding:14px 32px;
-  border:none;
-  border-radius:30px;
-  font-size:1rem;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(255,46,99,0.4);
-">
-  Kiss 💋
-</button>
-}
-@keyframes pop {
-  from { transform: scale(0.7); opacity: 0; }
-  to   { transform: scale(1); opacity: 1; }
+@keyframes rightKiss{
+  to{transform:translateX(-90px)}
 }
 
-/* ===== Falling Elements ===== */
-.fall {
-  position: fixed;
-  top: -60px;
-  animation: fall linear forwards;
-  pointer-events: none;
-  z-index: 1;
-  white-space: nowrap;
+/* Heart Explosion */
+.explode{
+  position:fixed;font-size:20px;
+  animation:boom 2s ease-out forwards;
 }
-@keyframes fall {
-  from { transform: translateY(-60px); opacity: 0; }
-  to   { transform: translateY(110vh); opacity: 1; }
+@keyframes boom{
+  to{
+    transform:translate(var(--x),var(--y)) scale(1.5);
+    opacity:0;
+  }
 }
 
-/* Theme colors */
-.heart { color: #ff2e63; text-shadow: 0 0 6px rgba(255,46,99,0.6); }
-.balloon { filter: drop-shadow(0 0 6px rgba(255, 120, 150, 0.5)); }
-.love-text {
-  color: #ff4f7a;
-  font-weight: 600;
-  text-shadow: 0 0 6px rgba(255,79,122,0.5);
+/* Glitter */
+.glitter{
+  position:fixed;width:4px;height:4px;
+  background:#ffb6c1;border-radius:50%;
+  animation:sparkle 2s forwards;
 }
-  /* Kiss animation overlay */
-.kiss-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(255, 230, 235, 0.98);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  animation: fadeIn 0.5s ease;
-}
-
-.lips {
-  font-size: 120px;
-  animation: kiss 3s ease forwards;
-}
-
-@keyframes kiss {
-  0%   { transform: scale(0.6); opacity: 0; }
-  30%  { transform: scale(1.2); opacity: 1; }
-  60%  { transform: scale(1); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes fadeOut {
-  to { opacity: 0; }
+@keyframes sparkle{
+  to{transform:translateY(120px);opacity:0}
 }
 </style>
 </head>
@@ -157,7 +117,6 @@ button {
 <div class="container">
   <h1>Hey Bubbu ❤️</h1>
   <h2>Will you be my Valentine?</h2>
-
   <div class="buttons">
     <button id="yes">Hell Yeah 😍</button>
     <button id="no">Naah nope</button>
@@ -173,92 +132,81 @@ button {
       Chal chalte h kahin khopche m,<br>
       and chumma chaati krte h 😄💋
     </p>
+    <button id="kissBtn">Kiss 💋</button>
   </div>
 </div>
 
 <script>
-/* ===== Rain (hearts, balloons, love text) ===== */
-function createFall() {
-  const el = document.createElement("div");
-  el.className = "fall";
-
-  const t = Math.random();
-  if (t < 0.4) {
-    el.innerHTML = "❤️";
-    el.classList.add("heart");
-    el.style.fontSize = (18 + Math.random()*22) + "px";
-  } else if (t < 0.7) {
-    el.innerHTML = "🎈";
-    el.classList.add("balloon");
-    el.style.fontSize = (26 + Math.random()*34) + "px";
-  } else {
-    el.innerHTML = "I love you ❤️";
-    el.classList.add("love-text");
-    el.style.fontSize = (14 + Math.random()*14) + "px";
-  }
-
-  el.style.left = Math.random()*100 + "vw";
-  el.style.animationDuration = (5 + Math.random()*6) + "s";
+/* Rain */
+function createFall(){
+  const el=document.createElement("div");
+  el.className="fall";
+  const t=Math.random();
+  if(t<.4){el.innerHTML="❤️";el.style.fontSize="22px"}
+  else if(t<.7){el.innerHTML="🎈";el.style.fontSize="30px"}
+  else{el.innerHTML="I love you ❤️";el.className+=" love-text"}
+  el.style.left=Math.random()*100+"vw";
+  el.style.animationDuration=5+Math.random()*6+"s";
   document.body.appendChild(el);
-  setTimeout(() => el.remove(), 13000);
+  setTimeout(()=>el.remove(),13000);
 }
-let rainInterval = setInterval(createFall, 220);
+let rain=setInterval(createFall,220);
 
-/* ===== YES action ===== */
-document.getElementById("yes").onclick = () => {
-  document.getElementById("popup").style.display = "flex";
-  for (let i = 0; i < 30; i++) setTimeout(createFall, i*80);
-  if (navigator.vibrate) navigator.vibrate([200,100,200,100,400]);
-};
-
-/* ===== NO button: floats continuously (unclickable) ===== */
-const noBtn = document.getElementById("no");
-function moveNo() {
-  const pad = 20;
-  const maxX = window.innerWidth - noBtn.offsetWidth - pad;
-  const maxY = window.innerHeight - noBtn.offsetHeight - pad;
-  const x = Math.random() * Math.max(0, maxX);
-  const y = Math.random() * Math.max(0, maxY);
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+/* YES */
+yes.onclick=()=>{
+  popup.style.display="flex";
 }
-let noMoveInterval = setInterval(moveNo, 550);
-moveNo();
-    document.getElementById("kissBtn").onclick = () => {
 
-  // Stop everything
-  clearInterval(rainInterval);
-  clearInterval(noMoveInterval);
+/* NO floating */
+const noBtn=document.getElementById("no");
+function moveNo(){
+  noBtn.style.transform=`translate(${Math.random()*window.innerWidth}px,${Math.random()*window.innerHeight}px)`
+}
+let noMove=setInterval(moveNo,500); moveNo();
 
-  // Remove falling elements
-  document.querySelectorAll(".fall").forEach(e => e.remove());
+/* Kiss */
+kissBtn.onclick=()=>{
+  clearInterval(rain); clearInterval(noMove);
+  document.querySelectorAll(".fall").forEach(e=>e.remove());
 
-  // Create kiss overlay
-  const overlay = document.createElement("div");
-  overlay.className = "kiss-overlay";
+  const o=document.createElement("div");
+  o.className="kiss-overlay";
+  o.innerHTML=`
+    <div class="lips-wrap">
+      <div class="lip left">💋</div>
+      <div class="lip right">💋</div>
+    </div>`;
+  document.body.appendChild(o);
 
-  const lips = document.createElement("div");
-  lips.className = "lips";
-  lips.innerHTML = "💋💋";
-
-  overlay.appendChild(lips);
-  document.body.appendChild(overlay);
-
-  // Optional vibration
-  if (navigator.vibrate) {
-    navigator.vibrate([300,100,300]);
+  // Heart explosion
+  for(let i=0;i<25;i++){
+    const h=document.createElement("div");
+    h.className="explode"; h.innerHTML="❤️";
+    h.style.left="50vw"; h.style.top="50vh";
+    h.style.setProperty("--x",(Math.random()*400-200)+"px");
+    h.style.setProperty("--y",(Math.random()*400-200)+"px");
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2000);
   }
 
-  // End after 3 seconds
-  setTimeout(() => {
-    overlay.style.animation = "fadeOut 1s forwards";
-    setTimeout(() => {
-      document.body.innerHTML = "";
-      document.body.style.background = "#ffe6ea";
-    }, 1000);
-  }, 3000);
+  // Glitter
+  for(let i=0;i<40;i++){
+    const g=document.createElement("div");
+    g.className="glitter";
+    g.style.left=Math.random()*100+"vw";
+    g.style.top=Math.random()*100+"vh";
+    document.body.appendChild(g);
+    setTimeout(()=>g.remove(),2000);
+  }
+
+  if(navigator.vibrate) navigator.vibrate([300,100,300]);
+
+  setTimeout(()=>{
+    document.body.innerHTML="";
+    document.body.style.background="#ffe6ea";
+  },3000);
 };
 </script>
 
 </body>
 </html>
-
