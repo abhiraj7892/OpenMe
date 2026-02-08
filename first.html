@@ -1,45 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>I Love You ❤️</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #ff758c, #ff7eb3);
-            font-family: 'Arial', sans-serif;
-        }
-        .card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            animation: pop 1s ease;
-        }
-        h1 {
-            color: #ff3366;
-            font-size: 2.5em;
-        }
-        p {
-            font-size: 1.2em;
-            color: #555;
-        }
-        @keyframes pop {
-            0% { transform: scale(0.7); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Glitter border */
+.glitter {
+    position: fixed;
+    inset: 10px;
+    border-radius: 25px;
+    border: 4px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(120deg, #ff4d6d, #ffd166, #ff4d6d) border-box;
+    animation: glow 3s infinite linear;
+}
+
+@keyframes glow {
+    0% { filter: drop-shadow(0 0 10px #ff4d6d); }
+    50% { filter: drop-shadow(0 0 25px #ffd166); }
+    100% { filter: drop-shadow(0 0 10px #ff4d6d); }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    color: #fff;
+    font-size: 2.2em;
+    margin-bottom: 25px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.buttons button {
+    padding: 15px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.yes {
+    background: #ff3366;
+    color: white;
+}
+
+.no {
+    background: #eee;
+}
+
+.dialog {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 5;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 90%;
+    animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.dialog-box p {
+    font-size: 1.05em;
+    color: #444;
+}
+
+/* Photo reveal */
+.photo {
+    width: 220px;
+    height: 220px;
+    border-radius: 20px;
+    object-fit: cover;
+    margin-top: 15px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    color: #ff3366;
+    font-size: 18px;
+    animation: float 6s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 0; }
+    to { transform: translateY(-10vh); opacity: 1; }
+}
+
+/* Fireworks canvas */
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+}
+</style>
 </head>
+
 <body>
-    <div class="card">
-        <h1>❤️ I Love You ❤️</h1>
-        <p>More than words can ever say.</p>
+
+<div class="glitter"></div>
+
+<div class="container">
+    <h1>Will you be my Valentine, <br><b>Bubbu</b>? 💖</h1>
+
+    <div class="buttons">
+        <button class="yes" onclick="accept()">Hell Yeah 😍</button>
+        <button class="no" onclick="alert('Wrong button 😌 Try again!')">
+            Naah Nope Nada 🙄
+        </button>
     </div>
+</div>
+
+<!-- Dialog -->
+<div class="dialog" id="dialog">
+    <div class="dialog-box">
+        <p>
+            💕 I knew that you love me Bubbu. <br><br>
+            I love you soooooooo much ❤️<br><br>
+            Chal chalte h kahin khopche m,<br>
+            and chumma chaati krte h 😄
+        </p>
+
+        <!-- Photo reveal -->
+        <img src="https://raw.githubusercontent.com/abhiraj7892/OpenMe/10175c547c8f523e3616e22bf14aa3cd09af184c/picture.JPG" class="photo" id="photo">
+
+        <br><br>
+        <button class="yes" onclick="closeDialog()">Aww ❤️</button>
+    </div>
+</div>
+
+<canvas id="fireworks"></canvas>
+
+<script>
+/* Hearts generator */
+setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (14 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 300);
+
+/* Romantic music (soft Web Audio) */
+let audioStarted = false;
+function startMusic() {
+    if (audioStarted) return;
+    audioStarted = true;
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = 220;
+    gain.gain.value = 0.05;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+}
+
+/* Fireworks */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+function firework() {
+    for (let i = 0; i < 120; i++) {
+        ctx.beginPath();
+        ctx.arc(
+            innerWidth / 2 + Math.random() * 200 - 100,
+            innerHeight / 2 + Math.random() * 200 - 100,
+            2,
+            0,
+            Math.PI * 2
+        );
+        ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
+        ctx.fill();
+    }
+    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 800);
+}
+
+/* Accept */
+function accept() {
+    startMusic();
+    if (navigator.vibrate) navigator.vibrate([200,100,200]);
+    firework();
+
+    document.getElementById("dialog").style.display = "flex";
+    setTimeout(() => {
+        document.getElementById("photo").style.display = "block";
+    }, 800);
+}
+
+/* Close */
+function closeDialog() {
+    document.getElementById("dialog").style.display = "none";
+}
+</script>
+
 </body>
 </html>
