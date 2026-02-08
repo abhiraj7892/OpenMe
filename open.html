@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine ❤️</title>
+<title>Be My Valentine 💖</title>
 
 <style>
 * { box-sizing: border-box; }
@@ -12,122 +12,149 @@ body {
     margin: 0;
     height: 100vh;
     overflow: hidden;
-    background: radial-gradient(circle at top, #ff9a9e, #fad0c4);
     font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff0844, #ffb199, #ff4ecd);
 }
 
 /* Glitter border */
 .glitter {
     position: fixed;
     inset: 10px;
-    border-radius: 25px;
-    border: 4px solid transparent;
+    border-radius: 30px;
+    border: 5px solid transparent;
     background:
-      linear-gradient(#fff, #fff) padding-box,
-      linear-gradient(120deg, #ff4d6d, #ffd166, #ff4d6d) border-box;
-    animation: glow 3s infinite linear;
+      linear-gradient(#0000, #0000) padding-box,
+      linear-gradient(120deg, #ff004c, #ffe600, #00ffd5, #ff004c) border-box;
+    animation: glow 2.5s infinite linear;
+    pointer-events: none;
 }
-
 @keyframes glow {
-    0% { filter: drop-shadow(0 0 10px #ff4d6d); }
-    50% { filter: drop-shadow(0 0 25px #ffd166); }
-    100% { filter: drop-shadow(0 0 10px #ff4d6d); }
+    0% { filter: drop-shadow(0 0 10px #ff004c); }
+    50% { filter: drop-shadow(0 0 30px #00ffd5); }
+    100% { filter: drop-shadow(0 0 10px #ff004c); }
 }
 
+/* Layout */
 .container {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-h1 {
-    color: #fff;
-    font-size: 2.2em;
-    margin-bottom: 25px;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.buttons button {
-    padding: 15px 25px;
-    margin: 10px;
-    border: none;
-    border-radius: 30px;
-    font-size: 1.1em;
-    cursor: pointer;
-}
-
-.yes {
-    background: #ff3366;
     color: white;
 }
 
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+/* Buttons */
+.buttons { position: relative; }
+button {
+    padding: 16px 30px;
+    margin: 12px;
+    border-radius: 40px;
+    border: none;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+.yes {
+    background: linear-gradient(135deg, #ff0055, #ff8800);
+    color: white;
+}
 .no {
+    position: absolute;
     background: #eee;
 }
 
+/* Dialog */
 .dialog {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.65);
-    z-index: 5;
+    background: rgba(0,0,0,0.7);
+    z-index: 6;
     justify-content: center;
     align-items: center;
 }
-
 .dialog-box {
     background: white;
     padding: 25px;
-    border-radius: 20px;
-    max-width: 90%;
-    animation: pop 0.6s ease;
+    border-radius: 22px;
+    max-width: 420px;
+    animation: pop 0.5s ease;
+    text-align: center;
 }
-
 @keyframes pop {
-    from { transform: scale(0.6); opacity: 0; }
+    from { transform: scale(0.5); opacity: 0; }
     to { transform: scale(1); opacity: 1; }
 }
-
 .dialog-box p {
+    color: #333;
     font-size: 1.05em;
-    color: #444;
 }
 
-/* Photo reveal */
-.photo {
-    width: 220px;
-    height: 220px;
-    border-radius: 20px;
-    object-fit: cover;
-    margin-top: 15px;
-    display: none;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+/* === Two Hearts Merging === */
+.hearts-wrap {
+    position: relative;
+    height: 120px;
+    margin: 10px 0 15px;
 }
-
-/* Floating hearts */
 .heart {
     position: absolute;
-    color: #ff3366;
-    font-size: 18px;
-    animation: float 6s linear infinite;
-    opacity: 0.8;
+    font-size: 70px;
+    top: 20px;
+}
+.heart.left {
+    left: -20px;
+    animation: moveLeft 1.2s forwards ease-in-out;
+}
+.heart.right {
+    right: -20px;
+    animation: moveRight 1.2s forwards ease-in-out;
+}
+@keyframes moveLeft {
+    to { left: 50%; transform: translateX(-50%) scale(0.8); opacity: 0; }
+}
+@keyframes moveRight {
+    to { right: 50%; transform: translateX(50%) scale(0.8); opacity: 0; }
 }
 
-@keyframes float {
-    from { transform: translateY(100vh); opacity: 0; }
-    to { transform: translateY(-10vh); opacity: 1; }
+.merged {
+    font-size: 90px;
+    opacity: 0;
+    animation: appearPulse 0.6s 1.2s forwards, pulse 1.2s 1.8s infinite;
+    filter: drop-shadow(0 0 18px #ff3366);
+}
+@keyframes appearPulse {
+    to { opacity: 1; }
+}
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
 }
 
-/* Fireworks canvas */
+/* Floating hearts & balloons */
+.float {
+    position: absolute;
+    animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+    from { transform: translateY(110vh); opacity: 0; }
+    to { transform: translateY(-15vh); opacity: 1; }
+}
+
+/* Fireworks */
 canvas {
     position: fixed;
     inset: 0;
-    z-index: 4;
+    z-index: 5;
     pointer-events: none;
 }
 </style>
@@ -138,62 +165,56 @@ canvas {
 <div class="glitter"></div>
 
 <div class="container">
-    <h1>Will you be my Valentine, <br><b>Bubbu</b>? 💖</h1>
-
+    <h1>Will you be my Valentine,<br><b>Bubbu</b>? 💘</h1>
     <div class="buttons">
         <button class="yes" onclick="accept()">Hell Yeah 😍</button>
-        <button class="no" onclick="alert('Wrong button 😌 Try again!')">
-            Naah Nope Nada 🙄
-        </button>
+        <button class="no" id="noBtn">Naah Nope Nada 🙄</button>
     </div>
 </div>
 
 <!-- Dialog -->
 <div class="dialog" id="dialog">
     <div class="dialog-box">
+
+        <!-- Two hearts merging -->
+        <div class="hearts-wrap">
+            <div class="heart left">❤️</div>
+            <div class="heart right">❤️</div>
+            <div class="merged">💖</div>
+        </div>
+
         <p>
-            💕 I knew that you love me Bubbu. <br><br>
+            💖 I knew that you love me Bubbu 💖<br><br>
             I love you soooooooo much ❤️<br><br>
             Chal chalte h kahin khopche m,<br>
             and chumma chaati krte h 😄
         </p>
 
-        <!-- Photo reveal -->
-        <img src="https://raw.githubusercontent.com/abhiraj7892/OpenMe/10175c547c8f523e3616e22bf14aa3cd09af184c/picture.JPG" class="photo" id="photo">
-
-        <br><br>
-        <button class="yes" onclick="closeDialog()">Aww ❤️</button>
+        <button class="yes" onclick="closeDialog()">Forever ❤️</button>
     </div>
 </div>
 
 <canvas id="fireworks"></canvas>
 
 <script>
-/* Hearts generator */
+/* Floating hearts & balloons */
 setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (14 + Math.random() * 20) + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-}, 300);
+    const el = document.createElement("div");
+    el.className = "float";
+    el.innerHTML = Math.random() > 0.5 ? "❤️" : "🎈";
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = (18 + Math.random() * 26) + "px";
+    el.style.animationDuration = (5 + Math.random() * 4) + "s";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 9000);
+}, 220);
 
-/* Romantic music (soft Web Audio) */
-let audioStarted = false;
-function startMusic() {
-    if (audioStarted) return;
-    audioStarted = true;
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.value = 220;
-    gain.gain.value = 0.05;
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-}
+/* No button runs away */
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+    noBtn.style.left = Math.random() * 240 - 120 + "px";
+    noBtn.style.top = Math.random() * 200 - 100 + "px";
+});
 
 /* Fireworks */
 const canvas = document.getElementById("fireworks");
@@ -201,32 +222,27 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-function firework() {
-    for (let i = 0; i < 120; i++) {
+function fireworkBurst(x, y) {
+    for (let i = 0; i < 150; i++) {
         ctx.beginPath();
         ctx.arc(
-            innerWidth / 2 + Math.random() * 200 - 100,
-            innerHeight / 2 + Math.random() * 200 - 100,
-            2,
-            0,
-            Math.PI * 2
+            x + Math.random()*200-100,
+            y + Math.random()*200-100,
+            2, 0, Math.PI*2
         );
         ctx.fillStyle = `hsl(${Math.random()*360},100%,60%)`;
         ctx.fill();
     }
-    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 800);
+    setTimeout(() => ctx.clearRect(0,0,canvas.width,canvas.height), 900);
 }
+setInterval(() => {
+    fireworkBurst(Math.random()*innerWidth, Math.random()*innerHeight/2);
+}, 1800);
 
 /* Accept */
 function accept() {
-    startMusic();
-    if (navigator.vibrate) navigator.vibrate([200,100,200]);
-    firework();
-
+    fireworkBurst(innerWidth/2, innerHeight/2);
     document.getElementById("dialog").style.display = "flex";
-    setTimeout(() => {
-        document.getElementById("photo").style.display = "block";
-    }, 800);
 }
 
 /* Close */
@@ -237,3 +253,54 @@ function closeDialog() {
 
 </body>
 </html>
+
+<style>
+.love-rain {
+    position: fixed;
+    top: -40px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    text-shadow: 0 0 8px #ff3366, 0 0 14px #ff6699;
+    animation: rain linear forwards;
+    z-index: 4;
+    pointer-events: none;
+}
+
+@keyframes rain {
+    from {
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(110vh);
+        opacity: 1;
+    }
+}
+</style>
+
+<script>
+function loveRain() {
+    const text = document.createElement("div");
+    text.className = "love-rain";
+    text.innerHTML = 'I love you ❤️';
+    text.style.left = Math.random() * 100 + "vw";
+    text.style.fontSize = (14 + Math.random() * 14) + "px";
+    text.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(text);
+
+    setTimeout(() => text.remove(), 9000);
+}
+
+// Continuous rain
+setInterval(loveRain, 180);
+
+// Extra burst when YES clicked
+function accept() {
+    for (let i = 0; i < 30; i++) {
+        setTimeout(loveRain, i * 60);
+    }
+    document.getElementById("dialog").style.display = "flex";
+}
+</script>
