@@ -382,3 +382,32 @@ body {
     filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
 }
 </style>
+
+<style>
+#no {
+    position: absolute;
+    transition: transform 0.25s linear;
+    z-index: 20;
+}
+</style>
+
+<script>
+const noBtn = document.getElementById("no");
+
+function moveNoButton() {
+    const padding = 20;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+// Move when mouse comes near
+noBtn.addEventListener("mouseenter", moveNoButton);
+
+// Also move randomly every second (floating effect)
+setInterval(moveNoButton, 900);
+</script>
