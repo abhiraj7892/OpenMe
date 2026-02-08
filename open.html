@@ -25,7 +25,6 @@ body {
   text-align: center;
   box-shadow: 0 25px 50px rgba(255, 80, 120, 0.3);
   z-index: 10;
-  position: relative;
 }
 
 h1 { color: #ff2e63; }
@@ -46,7 +45,6 @@ button {
   box-shadow: 0 10px 24px rgba(255,46,99,0.45);
 }
 
-/* FLOATING NO BUTTON */
 #no {
   position: fixed;
   background: #ffd6e0;
@@ -72,6 +70,12 @@ button {
   border-radius: 24px;
   text-align: center;
   box-shadow: 0 25px 50px rgba(255, 80, 120, 0.3);
+  animation: pop 0.5s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 #kissBtn {
@@ -82,7 +86,7 @@ button {
   border-radius: 30px;
 }
 
-/* Falling elements */
+/* Falling */
 .fall {
   position: fixed;
   top: -60px;
@@ -98,9 +102,9 @@ button {
 
 <body>
 
-<div class="container">
+<div class="container" id="mainCard">
   <h1>Hey Bubbu ❤️</h1>
-  <h2>Will you be my Valentine?</h2>
+  <h2 id="question">Will you be my Valentine?</h2>
   <button id="yes">Hell Yeah 😍</button>
 </div>
 
@@ -119,7 +123,7 @@ button {
 </div>
 
 <script>
-/* Rain */
+/* ❤️ Rain */
 function createFall() {
   const el = document.createElement("div");
   el.className = "fall";
@@ -130,38 +134,45 @@ function createFall() {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 12000);
 }
-let rainInterval = setInterval(createFall, 250);
+setInterval(createFall, 250);
 
 /* YES */
 document.getElementById("yes").onclick = () => {
   document.getElementById("popup").style.display = "flex";
 };
 
-/* NO BUTTON FLOAT */
+/* NO floating logic */
 const noBtn = document.getElementById("no");
 
-function moveNoButton() {
-  const padding = 20;
-  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
+function moveNo() {
+  const pad = 20;
+  const maxX = window.innerWidth - noBtn.offsetWidth - pad;
+  const maxY = window.innerHeight - noBtn.offsetHeight - pad;
   noBtn.style.left = Math.random() * maxX + "px";
   noBtn.style.top = Math.random() * maxY + "px";
 }
 
-// initial position
-moveNoButton();
+moveNo();
+setInterval(moveNo, 900);
+noBtn.addEventListener("mouseenter", moveNo);
 
-// move constantly
-setInterval(moveNoButton, 900);
+/* 😈 IF NO IS CLICKED */
+noBtn.addEventListener("click", () => {
+  const card = document.getElementById("mainCard");
+  const q = document.getElementById("question");
 
-// dodge cursor
-noBtn.addEventListener("mouseenter", moveNoButton);
+  q.innerHTML = "No is not an option 😉";
+  card.style.animation = "pop 0.4s ease";
 
-/* KISS */
+  setTimeout(() => {
+    q.innerHTML = "Will you be my Valentine?";
+  }, 1800);
+});
+
+/* 💋 Kiss (simple end) */
 document.getElementById("kissBtn").onclick = () => {
-  clearInterval(rainInterval);
-  document.body.innerHTML = "<h1 style='color:#ff2e63'>💋💥❤️</h1>";
+  document.body.innerHTML =
+    "<h1 style='color:#ff2e63;font-size:3rem'>💋❤️💥</h1>";
 };
 </script>
 
